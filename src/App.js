@@ -1,9 +1,10 @@
 import {Routes, Route} from 'react-router-dom'
-import { Login, Main, Register } from './components';
+import { Login, Main, Navbar, Register } from './components';
 
 function App() {
   return(
-    <div className="container">
+    <div>
+      <Navbar/>
       <Routes>
         <Route path='/' element={<Main/>}/>
         <Route path='/login' element={<Login/>}/>
