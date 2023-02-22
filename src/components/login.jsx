@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {logo} from '../constants'
-import { loginUserStart } from '../slice/auth';
+import AuthService from '../service/auth';
+import { signUserFailure, signUserStart, signUserSuccess } from '../slice/auth';
 import { Input } from '../ui'
+import { ValidationError } from './';
 
 
 const Login = () => {
@@ -12,9 +14,17 @@ const Login = () => {
   const dispatch = useDispatch();
   const {isLoading} = useSelector(state => state.auth);
 
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
+
     e.preventDefault();
-    dispatch(loginUserStart())
+    dispatch(signUserStart());
+    const user = {email, password}
+    try {
+      const response = await AuthService.userLogin(user)
+      dispatch(signUserSuccess(response.user));
+    } catch (error) {
+      dispatch(signUserFailure(error.response.data.errors))
+    }
   }
 
   return (
@@ -24,8 +34,10 @@ const Login = () => {
           <img className="mb-4" src={logo} alt="" width="72" height="57" />
           <h1 className="h3 mb-3 fw-normal">Please login</h1>
 
+          <ValidationError />
+
           <Input label={'Email address'} type={email} state = {email} setState = {setEmail} />
-          <Input label={'Password'} type={password} state = {password} setState = {setPassword} />
+          <Input label={'Password'} type={'password'} state = {password} setState = {setPassword} />
 
           <button className="w-100 btn btn-lg btn-primary mt-3" disabled={isLoading} onClick={loginHandler} type="submit">
             {isLoading ? 'Loading...' : 'Login'}
