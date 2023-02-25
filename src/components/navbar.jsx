@@ -17,29 +17,44 @@ const Navbar = () => {
   }
 
   return (
-    <div className="d-flex flex-column flex-md-row align-items-center p-3 mb-4 border-bottom container pt=3">
-      <Link to={'/'} className="logo">
-        <img src={logo} alt="Logo" />
-      </Link>
+     <nav className='navbar navbar-expand-lg bg-body-tertiary py-3'>
+       <div className="container">
+         <Link to={'/'} className="logo">
+           <img src={logo} alt="Logo" />
+         </Link>
 
-      <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        {loggedIn ? (
-          <>
-             <p className='me-3 py-2 m-0 text-dark text-decoration-none'>{user.username}</p>
-             <button className='btn btn-outline-danger' onClick={logoutHandler}>Logout</button>
-          </>
-        ) : (
-          <>
-             <Link to={'/login'} className="me-3 py-2 text-dark text-decoration-none" >
-               Login
-             </Link>
-             <Link to={'/register'} className="me-3 py-2 text-dark text-decoration-none" >
-                Register
-             </Link>
-          </>
-        )}
-      </nav>
-    </div>
+         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+         </button>
+
+         <div className="collapse navbar-collapse" id="navbarScroll">
+            <ul className='navbar-nav me-auto mb-2 mb-lg-0'></ul>
+
+            <div className='d-flex'>
+              {loggedIn ? (
+                <>
+                   <p className='me-3 py-2 m-0 text-dark text-decoration-none'>{user.username}</p>
+                   <button type="button" class="btn btn-outline-info mx-2">
+                     <Link to={'/create-article'} className="text-decoration-none" >
+                        Create
+                     </Link>
+                   </button>
+                   <button className='btn btn-outline-danger' onClick={logoutHandler}>Logout</button>
+                </>
+              ) : (
+                <>
+                   <Link to={'/login'} className="me-3 py-2 text-dark text-decoration-none" >
+                     Login
+                   </Link>
+                   <Link to={'/register'} className="me-3 py-2 text-dark text-decoration-none" >
+                     Register
+                   </Link>
+                </>
+              )}
+            </div>
+         </div>
+       </div>
+     </nav>
   )
 }
 
