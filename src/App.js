@@ -10,20 +10,11 @@ import { signUserSuccess } from './slice/auth';
 
 function App() {
   const dispatch = useDispatch()
+
   const getUser = async () => {
     try {
       const response = await AuthService.getUser()
       dispatch(signUserSuccess(response.user))
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const getArticles = async () => {
-    dispatch(getArticlesStart())
-    try {
-      const response = await ArticleService.getArticles()
-      dispatch(getArticleSuccess(response.articles))
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +25,6 @@ function App() {
     if(token) {
       getUser()
     }
-    getArticles()
   }, [])
 
   return(
